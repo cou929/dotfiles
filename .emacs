@@ -5,6 +5,7 @@
       (append
        (list
     (expand-file-name "~/.emacs.d/elisp")
+    (expand-file-name "/usr/share/emacs/site-lisp/w3m")
     )
        load-path))
 
@@ -73,11 +74,11 @@
 (define-key global-map
   "\C-cs" 'scheme-other-window)
 
-;; for mac
+;; hide menubar, fullscreen, for mac
 (when (eq window-system 'mac)
   (add-hook 'window-setup-hook
             (lambda ()
-;;              (setq mac-autohide-menubar-on-maximize t)
+              (setq mac-autohide-menubar-on-maximize t)
               (set-frame-parameter nil 'fullscreen 'fullboth)
               )))
 
@@ -173,3 +174,68 @@
           (run-at-time 0.5 nil 'delete-windows-on buf)
           (message "NO COMPILATION ERRORS!"))))
 
+;; emacs-w3m
+(require 'w3m-load)
+
+;; cppref.el
+(require 'cppref)
+(setq cppref-doc-dir "/Library/Perl/5.8.8/auto/share/dist/cppref") ;; doesn't end with "/"
+
+;; yasnippet
+;; http://code.google.com/p/yasnippet/
+(add-to-list 'load-path
+	     "~/.emacs.d/elisp/yasnippet-0.6.1c")
+(require 'yasnippet)
+;; change trigger to space key and selection to tab key
+;(setq yas/trigger-key (kbd "SPC"))
+(setq yas/trigger-key (kbd "C-o"))
+(setq yas/next-field-key (kbd "a"))
+(setq yas/prev-field-key (kbd "b"))
+(yas/initialize)
+(yas/load-directory "~/.emacs.d/elisp/yasnippet-0.6.1c/snippets")
+
+;; remove beep
+(setq ring-bell-function 'ignore)
+
+;; not use tab for indent
+(setq-default indent-tabs-mode nil)
+
+;; cperl-mode
+(defalias 'perl-mode 'cperl-mode)
+
+;; my eamil address, for yasnippet's "email" on text-mode
+(setq user-mail-address "cou929@gmail.com")
+
+;; magit
+(require 'magit)
+
+;; tab width, 2 spaces
+(setq-default tab-width 2)
+
+;; js2.el
+;; from http://8-p.info/emacs-javascript.html
+(autoload 'js2-mode "js2" nil t)
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+(setq-default c-basic-offset 2)
+(when (load "js2" t)
+  (setq js2-bounce-indent-flag nil)
+
+  (defun indent-and-back-to-indentation ()
+    (interactive)
+    (indent-for-tab-command)
+    (let ((point-of-indentation
+           (save-excursion
+             (back-to-indentation)
+             (point))))
+      (skip-chars-forward "\s " point-of-indentation))))
+
+;; anything-c-yasnippet
+;; http://d.hatena.ne.jp/IMAKADO/20080401/1206715770
+;; (require 'anything-c-yasnippet)
+;; (setq anything-c-yas-space-match-any-greedy t) ;スペース区切りで絞り込めるようにする デフォルトは nil
+;; (global-set-key (kbd "C-c y") 'anything-c-yas-complete) ;C-c yで起動 (同時にお使いのマイナーモードとキーバインドがかぶるかもしれません)
+;(add-to-list 'yas/extra-mode-hooks 'ruby-mode-hook)
+;(add-to-list 'yas/extra-mode-hooks 'cperl-mode-hook)
+
+;; escape making backup *~ file
+(setq backup-inhibited t)
