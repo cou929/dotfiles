@@ -12,19 +12,15 @@ SAVEHIST=10000000
 setopt hist_ignore_dups
 setopt share_history
 
-# cd settings
-setopt auto_cd
-setopt auto_pushd
-
-# command correction
-setopt correct
-
-# pack list candidates
-setopt list_packed
-
-# disable beeps
-setopt nobeep
-setopt nolistbeep
+setopt auto_cd # cd by dir name
+setopt autopushd # auto pushd
+# setopt auto_pushd 
+setopt correct # command correction
+setopt list_packed # pack list candidates
+setopt nobeep # disable beep
+setopt nolistbeep # disable beep
+setopt noautoremoveslash # disable '/' auto remove
+setopt complete_aliases # aliased ls needs if file/dir completions work
 
 limit coredumpsize 102400
 unsetopt promptcr
@@ -33,7 +29,6 @@ setopt long_list_jobs
 setopt list_types
 setopt auto_resume
 setopt auto_list
-setopt autopushd
 setopt pushd_ignore_dups
 setopt extended_glob
 setopt auto_menu
@@ -64,8 +59,11 @@ zle -N history-beginning-search-forward-end history-search-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
 
+# for terminal color
+export LSCOLORS=gxfxcxdxbxegedabagacad
+alias ls="ls -G -w -F"
+
 ## alias
-alias fcd='source ~/bin/scd.sh'
 alias cemacs='open -a Emacs'
 alias firefox='open -a Firefox'
 alias safari='open -a Safari'
@@ -76,6 +74,10 @@ alias la="ls -a"
 alias ll="ls -l"
 alias du="du -h"
 alias df="df -h"
+alias gp="git push origin master"
+
+# you may write feature experiments or machine specific settings to .zshrc.mine
+[ -f ~/.zshrc.mine ] && source ~/.zshrc.mine
 
 export PATH=$PATH:/opt/local/bin:/usr/local/bin:/usr/local/texlive/2008/bin/universal-darwin:/Users/kosei/projects/utils:/opt/local/lib
 
@@ -103,10 +105,6 @@ export QTDIR
 # for CGAL
 export CGAL_MAKEFILE="/Users/kosei/projects/CGAL-3.3.1/make/makefile_i386_Darwin-9.6_g++-4.0.1"
 
-# for terminal color
-export LSCOLORS=gxfxcxdxbxegedabagacad
-alias ls="ls -G -w -F"
-
 # Amazon Web Service keys
 export AWS_ACCESS_KEY=AKIAIMEJGSRXGFILQI6A
 export AWS_SECRET_KEY=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
@@ -124,5 +122,16 @@ export CPATH=$CPATH:/opt/local/include
 # pythonpath
 export PYTHONPATH=/opt/local/lib/python2.5/site-packages
 
-# localle and language
-export LANG=en_US.URF-8
+# ros
+# source ~/ros/setup.sh
+
+# euslisp
+export EUSDIR=/usr/local/eus
+
+
+# alias ls="say 'hatarakitakunai'"
+# alias cat="say 'hatarakitakunai'"
+# alias cd="say 'hatarakitakunai'"
+# alias bash="say 'hatarakitakunai'"
+# alias sh="say 'hatarakitakunai'"
+
