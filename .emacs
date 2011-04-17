@@ -1,12 +1,16 @@
 ;;;; .emacs
 
+;;; set w3m-command
+(setq w3m-command "/usr/local/bin/w3m")
+
 ;;; add ~/elisp/ to load-path
 (setq load-path
       (append
        (list
-    (expand-file-name "~/.emacs.d/elisp")
-    (expand-file-name "/usr/share/emacs/site-lisp/w3m")
-    )
+	(expand-file-name "~/.emacs.d/elisp")
+	(expand-file-name "~/.emacs.d")
+	(expand-file-name "/usr/share/emacs/site-lisp/w3m")
+	)
        load-path))
 
 ;;; turn on font-lock mode
@@ -82,6 +86,13 @@
               (set-frame-parameter nil 'fullscreen 'fullboth)
               )))
 
+(if window-system (progn
+  (setq initial-frame-alist '((width . 200)(height . 58)(top . 0)(left . 0)))
+  (set-background-color "Black")
+  (set-foreground-color "White")
+  (set-cursor-color "Gray")
+))
+
 (defun mac-toggle-max-window ()
   (interactive)
   (if (frame-parameter nil 'fullscreen)
@@ -147,18 +158,20 @@
 
 ;;; anything.el
 ;; bind anything to C-x b
+(require 'info)
+
 (require 'anything)
 (require 'anything-config)
-;(add-to-list 'anything-sources 'anything-c-source-emacs-commands)
 (setq anything-sources
       '(anything-c-source-buffers+
-	anything-c-source-colors
-	anything-c-source-recentf
-	anything-c-source-man-pages
-	anything-c-source-emacs-commands
-	anything-c-source-emacs-functions
-	anything-c-source-files-in-current-dir
-	))
+        anything-c-source-recentf
+        anything-c-source-man-pages
+        anything-c-source-emacs-commands
+        anything-c-source-emacs-functions
+        anything-c-source-bookmarks
+        anything-c-source-info-pages
+        anything-c-source-files-in-current-dir
+        ))
 (define-key global-map (kbd "C-x b") 'anything)
 
 ;;; compilation window size
@@ -179,7 +192,7 @@
 
 ;;; cppref.el
 (require 'cppref)
-(setq cppref-doc-dir "/Library/Perl/5.8.8/auto/share/dist/cppref") ;; doesn't end with "/"
+;(setq cppref-doc-dir "/Library/Perl/5.8.8/auto/share/dist/cppref") ;; doesn't end with "/"
 
 ;;; yasnippet
 ;; http://code.google.com/p/yasnippet/
@@ -221,7 +234,7 @@
 (setq-default tab-width 2)
 
 ;;; js2.el
-;; from http://8-p.info/emacs-javascript.html
+;;; from http://8-p.info/emacs-javascript.html
 (autoload 'js2-mode "js2" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 (setq-default c-basic-offset 2)
@@ -248,6 +261,10 @@
 ;;; escape making backup *~ file
 (setq backup-inhibited t)
 
+;;; multi-term
+(when (require 'multi-term nil t)
+  (setq multi-term-program "/bin/zsh"))
+
 ;;; change or make window with C-t
 (defun other-window-or-split ()
   (interactive)
@@ -255,6 +272,7 @@
     (split-window-horizontally))
   (other-window 1))
 (global-set-key (kbd "C-t") 'other-window-or-split)
+(define-key term-mode-map (kbd "C-t") 'other-window-or-split)
 
 ;;; c-eldoc
 (load "c-eldoc")
@@ -276,3 +294,85 @@
 
 ;;; dont make backup file
 (setq backup-inhibited t)
+
+;;; ChangeLog.txt
+(defun memo ()
+  (interactive)
+    (add-change-log-entry 
+     nil
+     (expand-file-name "~/memo/ChangeLog.txt")))
+(define-key ctl-x-map "M" 'memo)
+
+;;; todo.txt
+(defun todo ()
+  (interactive)
+  (expand-file-name "~/memo/todo.txt"))
+(define-key ctl-x-map "T" 'todo)
+
+;;; open-junk-file
+(require 'open-junk-file)
+
+;;; anything-c-source-info-localmdc
+(defvar anything-c-info-localmdc nil)
+(defvar anything-c-source-info-localmdc
+  `((name . "Info localmdc")
+    (init . (lambda ()
+              (save-window-excursion
+                (unless anything-c-info-localmdc
+                  (with-temp-buffer
+                    (Info-find-node "localmdc" "top")
+                    (setq anything-c-info-localmdc (split-string (buffer-string) "\n"))
+                    (Info-exit))))))
+    (candidates . (lambda ()
+                    (loop for i in anything-c-info-localmdc
+                          if (string-match "^* [^ \n]+[^: ]" i)
+                          collect (match-string 0 i))))
+    (action . (lambda (candidate)
+                (Info-find-node "localmdc" "top")
+                (Info-index (replace-regexp-in-string "* " "" candidate))))
+    (volatile)
+    (requires-pattern . 2)))
+
+;;; rst-mode
+(require 'rst)
+(setq auto-mode-alist
+      (append '(("\\.rst$" . rst-mode)
+                ("\\.rest$" . rst-mode)) auto-mode-alist))
+(add-hook 'rst-mode-hook
+          (lambda ()
+            (setq rst-slides-program "firefox")
+            ))
+
+;;; color-moccur
+(when (require 'color-moccur nil t)
+  (define-key global-map (kbd "M-o") 'occur-by-moccur)
+  (setq moccur-split-word t)
+  (add-to-list 'dmoccur-exclusion-mask "\\.DS_Store")
+  (add-to-list 'dmoccur-exclusion-mask "^#.+#$")
+  (require 'moccur-edit nil t)
+  (when (and (executable-find "cmigemo")
+             (require 'migemo nit t))
+    (setq moccur-use-migemo t)))
+
+;;; use option as meta-key
+(setq mac-option-modifier 'meta)
+
+
+;;; font setting
+(create-fontset-from-ascii-font "Menlo-14:weight=normal:slant=normal" nil "menlokakugo")
+(set-fontset-font "fontset-menlokakugo" 'unicode (font-spec :family "Hiragino Kaku Gothic ProN" ) nil 'append)
+(add-to-list 'default-frame-alist '(font . "fontset-menlokakugo"))
+(setq face-font-rescale-alist '((".*Hiragino.*" . 1.2) (".*Menlo.*" . 1.0)))
+
+;;; tramp
+(require 'tramp)
+
+;;; js2-mode.el by mooz
+;;; https://github.com/mooz/js2-mode/
+;; (autoload 'js2-mode "js2-mode" nil t)
+;; (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+
+;;; wdired
+(require 'wdired)
+(define-key dired-mode-map "r"
+  'wdired-change-to-wdired-mode)
