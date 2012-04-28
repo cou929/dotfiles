@@ -1,0 +1,18 @@
+[user]
+	name = Kosei Moriyama
+	email = cou929@gmail.com
+[color]
+	ui = auto
+[alias]
+	co = checkout
+	st = status -sb
+	pr = pull --rebase
+	fo = fetch origin
+	ro = rebase origin
+	rc = rebase --continue
+	wd = diff --word-diff
+	gp = grep -n
+	lg = log --graph --pretty=oneline --decorate --date=short --abbrev-commit --branches
+        ci = commit
+[push]
+	default = tracking
