@@ -45,8 +45,7 @@ setopt auto_param_keys
 setopt auto_param_slash
 
 # prompt
-#PROMPT="%m:%n:%/%% "
-PROMPT="%m:%n%% "
+PROMPT="[%T %n@%m %c]%% "
 RPROMPT="[%/]"
 
 # emacs-like keybind
@@ -74,26 +73,20 @@ alias la="ls -a"
 alias ll="ls -l"
 
 ## git aliases
-alias 'gs'='git status'
-alias 'gc'='git commit'
-alias 'gp'='git push'
-alias 'gpp'="git push origin master"
+alias 'g'='git'
+
+## virtualenv alias
+alias 'py'='source ~/share/pyenv/bin/activate'
 
 ## you may write feature experiments or machine specific settings to .zshrc.mine
 [ -f ~/.zshrc.mine ] && source ~/.zshrc.mine
 
 ## PATH
-export PATH=$PATH:/usr/local/bin:/Users/kosei/projects/utils
-
-## access git over proxy
-# export GIT_PROXY_COMMAND=/Users/kosei/.ssh/proxy_cmd_for_github
+MAC_HOME=/Users/kosei
+export PATH=$PATH:/usr/local/bin:${MAC_HOME}/projects/utils:${MAC_HOME}/share/pyenv/bin
 
 ## add my libraries to gcc include path
 export CPATH=/Users/kosei/projects/utils
-
-## add opt dirs to loadpath
-# export LIBRARY_PATH=$LIBRARY_PATH:/opt/local/lib
-# export CPATH=$CPATH:/opt/local/include
 
 ## charcter encoding
 export LANG=ja_JP.UTF-8
@@ -107,10 +100,16 @@ if [[ -f ~/.nvm/nvm.sh ]]; then
   source ~/.nvm/nvm.sh
 
   if which nvm >/dev/null 2>&1 ;then
-    _nodejs_use_version="v0.4.6"
+    _nodejs_use_version="v0.4.9"
     if nvm ls | grep -F -e "${_nodejs_use_version}" >/dev/null 2>&1 ;then
       nvm use "${_nodejs_use_version}" >/dev/null
     fi
     unset _nodejs_use_version
   fi
 fi
+
+## gisty by swdyh
+export GISTY_DIR="$HOME/projects/gists"
+
+## rvm
+[[ -s "/Users/kosei/.rvm/scripts/rvm" ]] && source "/Users/kosei/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*

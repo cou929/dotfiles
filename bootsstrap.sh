@@ -10,5 +10,9 @@ ln -s ${DOT_PATH}/.zshrc ~/.zshrc
 ln -s ${DOT_PATH}/.screenrc ~/.screenrc
 ln -s ${DOT_PATH}/.emacs.d ~/.emacs.d
 ln -s ${DOT_PATH}/.hgrc ~/.hgrc
-ln -s ${DOT_PATH}/memo ~/memo
+ln -s ${DROPBOX_PATH}/memo ~/memo
+ln -s ${DOT_PATH}/.gitconfig ~/.gitconfig
 
+# prepare pythonenv
+mkdir -p ~/share
+${DROPBOX_PATH}/projects/utils/virtualenv.py ~/share/pyenv

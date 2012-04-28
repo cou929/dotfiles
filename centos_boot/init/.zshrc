@@ -45,7 +45,6 @@ setopt auto_param_keys
 setopt auto_param_slash
 
 # prompt
-#PROMPT="%m:%n:%/%% "
 PROMPT="%m:%n%% "
 RPROMPT="[%/]"
 
@@ -79,21 +78,18 @@ alias 'gc'='git commit'
 alias 'gp'='git push'
 alias 'gpp'="git push origin master"
 
+## virtualenv alias
+alias 'py'='source ~/share/pyenv/bin/activate'
+
 ## you may write feature experiments or machine specific settings to .zshrc.mine
 [ -f ~/.zshrc.mine ] && source ~/.zshrc.mine
 
 ## PATH
-export PATH=$PATH:/usr/local/bin:/Users/kosei/projects/utils
-
-## access git over proxy
-# export GIT_PROXY_COMMAND=/Users/kosei/.ssh/proxy_cmd_for_github
+MAC_HOME=/Users/kosei
+export PATH=$PATH:/usr/local/bin:${MAC_HOME}/projects/utils:${MAC_HOME}/share/pyenv/bin
 
 ## add my libraries to gcc include path
 export CPATH=/Users/kosei/projects/utils
-
-## add opt dirs to loadpath
-# export LIBRARY_PATH=$LIBRARY_PATH:/opt/local/lib
-# export CPATH=$CPATH:/opt/local/include
 
 ## charcter encoding
 export LANG=ja_JP.UTF-8
