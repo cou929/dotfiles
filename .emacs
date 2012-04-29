@@ -125,6 +125,14 @@
 
 ;;; cperl-mode
 (defalias 'perl-mode 'cperl-mode)
+(setq cperl-indent-level 4
+      cperl-continued-statement-offset 4
+      cperl-close-paren-offset -4
+      cperl-label-offset -4
+      cperl-comment-column 40
+      cperl-highlight-variables-indiscriminately t
+      cperl-indent-parens-as-block t
+      cperl-font-lock t)
 
 ;;; js2.el
 (autoload 'js2-mode "js2" nil t)
