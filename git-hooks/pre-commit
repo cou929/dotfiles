@@ -31,7 +31,7 @@ for my $file (split "\n", $files) {
     }
     next unless $checker;
 
-    my $exit_status = system("$checker_dir/$checker");
+    my $exit_status = system("$checker_dir/$checker $file");
     exit $exit_status if $exit_status != 0;
 }
 
