@@ -82,11 +82,12 @@ alias 'py'='source ~/share/pyenv/bin/activate'
 [ -f ~/.zshrc.mine ] && source ~/.zshrc.mine
 
 ## PATH
-MAC_HOME=/Users/kosei
+ME=`whoami`
+MAC_HOME=/Users/${ME}
 export PATH=$PATH:/usr/local/bin:${MAC_HOME}/projects/utils:${MAC_HOME}/share/pyenv/bin
 
 ## add my libraries to gcc include path
-export CPATH=/Users/kosei/projects/utils
+export CPATH=/Users/${ME}/projects/utils
 
 ## charcter encoding
 export LANG=ja_JP.UTF-8
@@ -112,4 +113,7 @@ fi
 export GISTY_DIR="$HOME/projects/gists"
 
 ## rvm
-[[ -s "/Users/kosei/.rvm/scripts/rvm" ]] && source "/Users/kosei/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+[[ -s "/Users/${ME}/.rvm/scripts/rvm" ]] && source "/Users/${ME}/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+## CONF_DIR
+export MY_CONF_DIR="$HOME/Dropbox/resource/dotfiles/"
