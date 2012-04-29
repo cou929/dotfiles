@@ -1,0 +1,38 @@
+#! /usr/bin/perl
+
+use strict;
+use warnings;
+
+my $ignore_rules = [
+    qr/^.DS_Store$/,
+];
+
+my $type_map = [
+    {regex => qr/\.pl$/, checker => 'perl-cheker'},
+    {regex => qr/\.pm$/, checker => 'perl-cheker'},
+    {regex => qr/\.js$/, checker => 'js-checker'},
+];
+
+my $checker_dir = '/path/to/dir';
+
+my $against = system('git rev-parse --verify HEAD > /dev/null 2>&1') == 0
+    ? 'HEAD'
+    : `git hash-object -t tree /dev/null`;
+chomp $against;
+
+my $files = `git diff-index --cached --name-only $against`;
+for my $file (split "\n", $files) {
+    next if ! -e $file;  # ignore delete
+    next if scalar grep { $file =~ $_ } @{$ignore_rules};  # ignore a file if matches ignore_rules
+
+    my $checker = undef;
+    for my $c (@{$type_map}) {
+        $checker = $c->{checker} if $file =~ $c->{regex};
+    }
+    next unless $checker;
+
+    my $exit_status = system("$checker_dir/$checker");
+    exit $exit_status if $exit_status != 0;
+}
+
+exit 0;
