@@ -17,3 +17,5 @@
   br = branch
 [push]
 	default = tracking
+[init]
+	templatedir = /Users/kosei/Dropbox/resource/dotfiles/git_template

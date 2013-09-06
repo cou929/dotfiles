@@ -63,7 +63,7 @@ alias ll="ls -l"
 alias g='git'
 
 ## PATH
-export PATH=$PATH:/usr/local/bin:${HOME}/projects/utils:${HOME}/share/pyenv/bin:${HOME}/perl5/bin
+export PATH=$PATH:/usr/local/bin:${HOME}/projects/utils:${HOME}/share/pyenv/bin:${HOME}/perl5/bin:${HOME}/Dropbox/resource/dotfiles/git_hook_scripts
 
 ## charcter encoding
 export LANG=ja_JP.UTF-8

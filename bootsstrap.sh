@@ -13,3 +13,4 @@ ln -s ${DROPBOX_PATH}/memo ~/memo
 ln -s ${DROPBOX_PATH}/src ~/src
 ln -s ${DROPBOX_PATH}/Apps/note_updeter/ChangeLog.txt ~/memo/ChangeLog.txt
 ln -s ${DOT_PATH}/.gitconfig ~/.gitconfig
+g config --global init.templatedir ${HOME}/Dropbox/resource/dotfiles/git_template
