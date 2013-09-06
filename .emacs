@@ -296,3 +296,114 @@
 
 ;;; php-mode
 (require 'php-mode)
+
+;;; flymake for perl
+(defvar flymake-perl-err-line-patterns '(("\\(.*\\) at \\([^ \n]+\\) line \\([0-9]+\\)[,.\n]" 2 3 nil 1)))
+(defconst flymake-allowed-perl-file-name-masks '(("\\.pl$" flymake-perl-init)
+                                                 ("\\.pm$" flymake-perl-init)
+                                                 ("\\.t$" flymake-perl-init)
+                                                 ))
+
+(defun flymake-perl-init ()
+  (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                     'flymake-create-temp-inplace))
+         (local-file (file-relative-name
+                      temp-file
+                      (file-name-directory buffer-file-name))))
+    (list "perl" (list "-wc" local-file))))
+
+(defun flymake-perl-load ()
+  (interactive)
+  (set-perl5lib)
+  (defadvice flymake-post-syntax-check (before flymake-force-check-was-interrupted)
+    (setq flymake-check-was-interrupted t))
+  (ad-activate 'flymake-post-syntax-check)
+  (setq flymake-allowed-file-name-masks (append flymake-allowed-file-name-masks flymake-allowed-perl-file-name-masks))
+  (setq flymake-err-line-patterns flymake-perl-err-line-patterns)
+  (flymake-mode t))
+
+(add-hook 'cperl-mode-hook '(lambda () (flymake-perl-load)))
+
+(defun next-flymake-error ()
+  (interactive)
+  (flymake-goto-next-error)
+  (let ((err (get-char-property (point) 'help-echo)))
+    (when err
+      (message err))))
+(global-set-key "\C-ce" 'next-flymake-error)
+
+;;; perltidy
+(defun perltidy-region ()
+  "Run perltidy on the current region."
+  (interactive)
+  (save-excursion
+    (shell-command-on-region (point) (mark) "perltidy -q" nil t)))
+(defun perltidy-defun ()
+  "Run perltidy on the current defun."
+  (interactive)
+  (save-excursion (mark-defun)
+                  (perltidy-region)))
+;; (global-set-key "\C-ct" 'perltidy-region)
+;; (global-set-key "\C-c\C-t" 'perltidy-defun)
+(add-hook 'cperl-mode-hook '(lambda ()
+                               (define-key cperl-mode-map "\C-ct" 'perltidy-region)))
+(add-hook 'cperl-mode-hook '(lambda ()
+                               (define-key cperl-mode-map "\C-c\C-t" 'perltidy-defun)))
+
+;;; Visualize zenkaku-space, tab and line end white spaces
+(defface my-face-b-1 '((t (:background "medium aquamarine"))) nil)
+(defface my-face-b-2 '((t (:background "Red"))) nil)
+(defface my-face-u-1 '((t (:background "SteelBlue" :underline t))) nil)
+(defvar my-face-b-1 'my-face-b-1)
+(defvar my-face-b-2 'my-face-b-2)
+(defvar my-face-u-1 'my-face-u-1)
+(defadvice font-lock-mode (before my-font-lock-mode ())
+  (font-lock-add-keywords
+   major-mode
+   '(
+     ("　" 0 my-face-b-1 append)
+     ("\t" 0 my-face-b-2 append)
+     ("[ ]+$" 0 my-face-u-1 append)
+     )))
+(ad-enable-advice 'font-lock-mode 'before 'my-font-lock-mode)
+(ad-activate 'font-lock-mode)
+(add-hook 'find-file-hooks '(lambda ()
+                              (if font-lock-mode
+                                  nil
+                                (font-lock-mode t))) t)
+
+;;; html-mode suffixes
+(add-to-list 'auto-mode-alist '("\\.tt$" . html-mode))
+(add-to-list 'auto-mode-alist '("\\.xt$" . html-mode))
+
+;;; cperl-mode suffixes
+(add-to-list 'auto-mode-alist '("\\.psgi$" . cperl-mode))
+(add-to-list 'auto-mode-alist '("\\.t$" . cperl-mode))
+
+;;; pythontidy
+(defun pytidy-whole-buffer ()
+  (interactive)
+  (let ((a (point)))
+    (shell-command-on-region (point-min) (point-max) "PythonTidy.py" t)
+    (goto-char a)))
+(add-hook 'python-mode-hook '(lambda ()
+                               (define-key python-mode-map "\C-ct" 'pytidy-whole-buffer)))
+
+;;; grep
+(define-key global-map (kbd "C-x g") 'grep)
+(require 'grep)
+(setq grep-command-before-query "grep -nH -r -e ")
+(defun grep-default-command ()
+  (if current-prefix-arg
+      (let ((grep-command-before-target
+             (concat grep-command-before-query
+                     (shell-quote-argument (grep-tag-default)))))
+        (cons (if buffer-file-name
+                  (concat grep-command-before-target
+                          " *."
+                          (file-name-extension buffer-file-name))
+                (concat grep-command-before-target " ."))
+              (+ (length grep-command-before-target) 1)))
+    (car grep-command)))
+(setq grep-command (cons (concat grep-command-before-query " .")
+                         (+ (length grep-command-before-query) 1)))
