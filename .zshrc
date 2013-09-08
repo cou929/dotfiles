@@ -1,8 +1,15 @@
 ## zsh confs
 
+# include site functions
+if which brew > /dev/null; then
+    fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
+else
+    fpath=(~/.zsh/completion $fpath)
+fi
+
 # auto complete
 autoload -U compinit
-compinit
+compinit -u
 
 # command history
 HISTFILE=$HOME/Dropbox/resource/zsh_history/.zsh-history
@@ -19,6 +26,7 @@ setopt nobeep # disable beep
 setopt nolistbeep # disable beep
 setopt noautoremoveslash # disable '/' auto remove
 setopt complete_aliases # aliased ls needs if file/dir completions work
+setopt no_complete_aliases # git completions for 'g' alias
 
 limit coredumpsize 102400
 unsetopt promptcr
@@ -42,7 +50,16 @@ setopt auto_param_keys
 setopt auto_param_slash
 
 # prompt
-PROMPT="[%T %n@%m %c]%% "
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' formats ' (%b)'
+zstyle ':vcs_info:*' actionformats ' (%b|%a)'
+precmd () {
+    psvar=()
+    LANG=en_US.UTF-8 vcs_info
+    [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
+}
+
+PROMPT="[%T %n@%m %c%1(v|%F{green}%1v%f|)]%% "
 
 # emacs-like keybind
 bindkey -e
