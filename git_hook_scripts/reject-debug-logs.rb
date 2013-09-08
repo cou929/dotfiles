@@ -23,7 +23,6 @@ errors = `#{diff_cmd} --name-only HEAD`.each_line.inject([]) do |errors, filenam
   filename.chomp!
 
   changes = `#{diff_cmd} --cached -U0 HEAD -- #{filename}`.split(/\n/)
-puts changes
   checks.inject(errors) do |acc, check|
     unless (result = changes.grep(/^\+.*\b#{check}\b/)).empty?
       acc << {:name => check, :file =>  filename, :matches => result}
