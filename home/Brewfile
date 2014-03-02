@@ -36,7 +36,7 @@ install jq || true
 install mysql || true
 install memcached || true
 install redis || true
-install td-agent || true
+install "http://toolbelt.treasuredata.com/brew/td-agent.rb" || true
 
 cask install dropbox || true
 cask install hipchat || true
