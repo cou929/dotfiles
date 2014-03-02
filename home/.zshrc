@@ -85,17 +85,6 @@ export PATH=$PATH:/usr/local/bin:${HOME}/projects/utils
 ## charcter encoding
 export LANG=ja_JP.UTF-8
 
-## python env  http://methane.hatenablog.jp/entry/2013/11/05/Mac_%E3%81%A7_Python_%E3%81%AE%E9%96%8B%E7%99%BA%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89(2013_11)
-PATH=$HOME/local/py3/bin:$PATH
-WORKON_HOME=$HOME/venvs
-. ~/local/py3/bin/virtualenvwrapper.sh
-
-## zsh-syntax-highlighting
-source ~/src/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-## perl
-if which plenv > /dev/null; then eval "$(plenv init -)"; fi
-
 ## static httpd
 function static_httpd {
   if which plackup > /dev/null; then
@@ -117,10 +106,8 @@ function static_httpd {
   fi
 }
 
-## ruby
-if which rbenv > /dev/null; then
-    export PATH="$HOME/.rbenv/bin:$PATH"
-    eval "$(rbenv init -)"
-fi
-
-[ -s $HOME/.nvm/nvm.sh ] && . $HOME/.nvm/nvm.sh # This loads NVM
+# ll envs
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+if which plenv > /dev/null; then eval "$(plenv init -)"; fi
+source $(brew --prefix nvm)/nvm.sh

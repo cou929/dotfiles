@@ -2,4 +2,52 @@ tap phinze/homebrew-cask || true
 tap homebrew/versions|| true
 update || true
 
+install brew-cask || true
 install emacs || true
+install git || true
+install hg || true
+install gibo || true
+install hub || true
+install tree || true
+install openssl || true
+install readline || true
+install cmake || true
+install fish || true
+install zsh || true
+install wget || true
+install curl || true
+install cmake || true
+install libtool || true
+install automake || true
+install pstree || true
+install nkf || true
+install tig || true
+
+install pyenv-virtualenv || true
+install pyenv || true
+install ruby-build || true
+install rbenv || true
+install perl-build || true
+install plenv || true
+install nvm || true
+install nginx ||  true
+install phantomjs || true
+install llvm || true
+install jq || true
+install mysql || true
+install memcached || true
+install redis || true
+install td-agent || true
+
+cask install dropbox || true
+cask install hipchat || true
+cask install skype || true
+cask install google-chrome-canary || true
+cask install google-chrome || true
+cask install firefox || true
+cask install virtualbox || true
+cask install vagrant || true
+cask install vlc || true
+cask install iterm2 || true
+
+clean
