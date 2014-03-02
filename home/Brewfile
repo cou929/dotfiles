@@ -12,7 +12,6 @@ install tree || true
 install openssl || true
 install readline || true
 install cmake || true
-install fish || true
 install zsh || true
 install wget || true
 install curl || true
@@ -49,5 +48,3 @@ cask install virtualbox || true
 cask install vagrant || true
 cask install vlc || true
 cask install iterm2 || true
-
-clean
