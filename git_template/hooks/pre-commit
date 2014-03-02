@@ -1,3 +1,0 @@
-#! /bin/sh
-
-reject-debug-logs.rb

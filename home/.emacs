@@ -380,6 +380,10 @@
 (add-to-list 'auto-mode-alist '("\\.psgi$" . cperl-mode))
 (add-to-list 'auto-mode-alist '("\\.t$" . cperl-mode))
 
+;;; ruby-mode suffixes
+(add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.pp$" . ruby-mode))
+
 ;;; pythontidy
 (defun pytidy-whole-buffer ()
   (interactive)

@@ -80,37 +80,21 @@ alias ll="ls -l"
 alias g='git'
 
 ## PATH
-export PATH=$PATH:/usr/local/bin:${HOME}/projects/utils:${HOME}/share/pyenv/bin:${HOME}/perl5/bin:${HOME}/Dropbox/resource/dotfiles/git_hook_scripts
+export PATH=$PATH:/usr/local/bin:${HOME}/projects/utils
 
 ## charcter encoding
 export LANG=ja_JP.UTF-8
 
-## rvm
-[[ -s "/Users/${ME}/.rvm/scripts/rvm" ]] && source "/Users/${ME}/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
-## python env
-export WORKON_HOME=$HOME/.virtualenvs
-. virtualenvwrapper.sh
-
-mkvenv () {
-    base_python=`which python$1` 
-    mkvirtualenv --distribute --python=$base_python $2
-}
-
-## ssh and new screen tab
-function sssh {
-    screen -t $1 ssh $1
-}
+## python env  http://methane.hatenablog.jp/entry/2013/11/05/Mac_%E3%81%A7_Python_%E3%81%AE%E9%96%8B%E7%99%BA%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89(2013_11)
+PATH=$HOME/local/py3/bin:$PATH
+WORKON_HOME=$HOME/venvs
+. ~/local/py3/bin/virtualenvwrapper.sh
 
 ## zsh-syntax-highlighting
 source ~/src/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-## perlbrew
-export PERLBREW_PERL=perl-5.16.2
-source ~/perl5/perlbrew/etc/bashrc
-
-## nodebrew
-export PATH=$HOME/.nodebrew/current/bin:$PATH
+## perl
+if which plenv > /dev/null; then eval "$(plenv init -)"; fi
 
 ## static httpd
 function static_httpd {
@@ -133,7 +117,10 @@ function static_httpd {
   fi
 }
 
-## for fout perl
-export FOUT_HOME=$HOME/mnt/fout/
-export FOUTUI_HOME=$HOME/mnt/fout_ui/
-export PERL5LIB=${FOUT_HOME}lib:${FOUT_HOME}extlib/lib/perl5/x86_64-linux/:${FOUT_HOME}extlib/lib/perl5/:{FOUT_HOME}t/lib/:${FOUTUI_HOME}lib:${FOUTUI_HOME}extlib/lib/perl5/x86_64-linux/:${FOUTUI_HOME}extlib/lib/perl5/:~/perl5/lib/perl5/
+## ruby
+if which rbenv > /dev/null; then
+    export PATH="$HOME/.rbenv/bin:$PATH"
+    eval "$(rbenv init -)"
+fi
+
+[ -s $HOME/.nvm/nvm.sh ] && . $HOME/.nvm/nvm.sh # This loads NVM

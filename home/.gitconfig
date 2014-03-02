@@ -13,9 +13,7 @@
 	wd = diff --word-diff
 	gp = grep -n
 	lg = log --graph --pretty=oneline --decorate --date=short --abbrev-commit --branches
-  ci = commit
-  br = branch
+        ci = commit
+        br = branch
 [push]
 	default = tracking
-[init]
-	templatedir = /Users/kosei/Dropbox/resource/dotfiles/git_template
