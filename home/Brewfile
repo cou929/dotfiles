@@ -1,0 +1,5 @@
+tap phinze/homebrew-cask || true
+tap homebrew/versions|| true
+update || true
+
+install emacs || true
