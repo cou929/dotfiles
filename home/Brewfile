@@ -21,6 +21,7 @@ install automake || true
 install pstree || true
 install nkf || true
 install tig || true
+install ack || true
 
 install pyenv-virtualenv || true
 install pyenv || true
