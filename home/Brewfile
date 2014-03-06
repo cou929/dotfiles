@@ -22,6 +22,7 @@ install pstree || true
 install nkf || true
 install tig || true
 install ack || true
+install ngrep || true
 
 install pyenv-virtualenv || true
 install pyenv || true
