@@ -27,6 +27,7 @@ install jpeg || true
 install libpng || true
 install freetype || true
 install imagemagick || true
+install zsh || true
 
 install pyenv-virtualenv || true
 install pyenv || true
@@ -37,7 +38,6 @@ install plenv || true
 install nvm || true
 install nginx ||  true
 install phantomjs || true
-install llvm || true
 install jq || true
 install mysql || true
 install memcached || true
