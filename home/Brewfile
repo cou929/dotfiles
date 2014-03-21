@@ -29,8 +29,8 @@ install freetype || true
 install imagemagick || true
 install zsh || true
 
-install pyenv-virtualenv || true
-install pyenv || true
+install python || true
+install python3 || true
 install ruby-build || true
 install rbenv || true
 install perl-build || true

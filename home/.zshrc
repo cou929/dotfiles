@@ -80,7 +80,7 @@ alias ll="ls -l"
 alias g='git'
 
 ## PATH
-export PATH=$PATH:/usr/local/bin:${HOME}/projects/utils
+export PATH=/usr/local/bin:$PATH:${HOME}/projects/utils
 
 ## charcter encoding
 export LANG=ja_JP.UTF-8
@@ -107,7 +107,7 @@ function static_httpd {
 }
 
 # ll envs
-if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 if which plenv > /dev/null; then eval "$(plenv init -)"; fi
 source $(brew --prefix nvm)/nvm.sh
+source /usr/local/bin/virtualenvwrapper.sh
