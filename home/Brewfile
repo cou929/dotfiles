@@ -57,6 +57,8 @@ cask install hyperswitch || true
 cask install skitch || true
 cask install sublime-text || true
 cask install gyazo || true
+cask install google-japanese-ime || true
+cask install android-studio || true
 
 tap homebrew/dupes
 install --HEAD -f --cc=llvm-gcc screen
