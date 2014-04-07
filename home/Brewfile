@@ -43,6 +43,7 @@ install mysql || true
 install memcached || true
 install redis || true
 install "http://toolbelt.treasuredata.com/brew/td-agent.rb" || true
+install heroku || true
 
 cask install dropbox || true
 cask install hipchat || true
