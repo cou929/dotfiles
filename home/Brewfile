@@ -28,6 +28,7 @@ install libpng || true
 install freetype || true
 install imagemagick || true
 install zsh || true
+install optipng || true
 
 install python || true
 install python3 || true
