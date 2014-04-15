@@ -111,3 +111,6 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 if which plenv > /dev/null; then eval "$(plenv init -)"; fi
 source $(brew --prefix nvm)/nvm.sh
 source /usr/local/bin/virtualenvwrapper.sh
+
+# eclipse
+export PATH=$PATH:/Applications/eclipse/android/platform-tools
