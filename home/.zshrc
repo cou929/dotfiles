@@ -78,6 +78,9 @@ alias ls="ls -G -w -F"
 ## alias
 alias ll="ls -l"
 alias g='git'
+alias s='git st'
+alias m='git co master'
+alias d='git diff'
 
 ## PATH
 export PATH=/usr/local/bin:$PATH:${HOME}/projects/utils
