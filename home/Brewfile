@@ -39,6 +39,7 @@ install plenv || true
 install nvm || true
 install nginx ||  true
 install phantomjs || true
+install casperjs --devel || true
 install jq || true
 install mysql || true
 install memcached || true
