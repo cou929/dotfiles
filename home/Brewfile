@@ -47,6 +47,8 @@ install redis || true
 install "http://toolbelt.treasuredata.com/brew/td-agent.rb" || true
 install heroku || true
 install postgres || true
+install mecab || true
+install mecab-ipadic || true
 
 cask install dropbox || true
 cask install hipchat || true
