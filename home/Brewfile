@@ -66,6 +66,7 @@ cask install gyazo || true
 cask install google-japanese-ime || true
 cask install sequel-pro || true
 cask install pg-commander || true
+cask install cyberduck || true
 
 tap homebrew/dupes
 install --HEAD -f --cc=llvm-gcc screen
