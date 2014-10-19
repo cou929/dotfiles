@@ -117,3 +117,6 @@ source /usr/local/bin/virtualenvwrapper.sh
 
 # eclipse
 export PATH=$PATH:/Applications/eclipse/android/platform-tools
+
+# added by travis gem
+[ -f /Users/kosei/.travis/travis.sh ] && source /Users/kosei/.travis/travis.sh
