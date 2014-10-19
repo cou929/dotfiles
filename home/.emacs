@@ -411,3 +411,9 @@
     (car grep-command)))
 (setq grep-command (cons (concat grep-command-before-query " .")
                          (+ (length grep-command-before-query) 1)))
+
+;;; rust-mode
+(require 'package)
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
+(package-initialize)
