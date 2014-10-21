@@ -67,6 +67,9 @@ cask install google-japanese-ime || true
 cask install sequel-pro || true
 cask install pg-commander || true
 cask install cyberduck || true
+cask install boot2docker || true
 
 tap homebrew/dupes
 install --HEAD -f --cc=llvm-gcc screen
+
+cleanup
