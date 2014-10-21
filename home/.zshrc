@@ -120,3 +120,7 @@ export PATH=$PATH:/Applications/eclipse/android/platform-tools
 
 # added by travis gem
 [ -f /Users/kosei/.travis/travis.sh ] && source /Users/kosei/.travis/travis.sh
+
+# google cloud sdk
+source '/Users/cou929/google-cloud-sdk/path.zsh.inc'
+source '/Users/cou929/google-cloud-sdk/completion.zsh.inc'
