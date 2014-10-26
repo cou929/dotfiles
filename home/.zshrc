@@ -122,5 +122,10 @@ export PATH=$PATH:/Applications/eclipse/android/platform-tools
 [ -f /Users/kosei/.travis/travis.sh ] && source /Users/kosei/.travis/travis.sh
 
 # google cloud sdk
-source '/Users/cou929/google-cloud-sdk/path.zsh.inc'
-source '/Users/cou929/google-cloud-sdk/completion.zsh.inc'
+source "$HOME/google-cloud-sdk/path.zsh.inc"
+source "$HOME/google-cloud-sdk/completion.zsh.inc"
+
+# boot2docker
+export DOCKER_TLS_VERIFY=1
+export DOCKER_HOST=tcp://192.168.59.103:2376
+export DOCKER_CERT_PATH=$HOME/.boot2docker/certs/boot2docker-vm

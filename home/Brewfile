@@ -1,75 +1,77 @@
-tap phinze/homebrew-cask || true
-tap homebrew/versions|| true
-update || true
+brew tap | grep versions > /dev/null 2>&1 || brew tap homebrew/versions
+brew tap | grep dupes > /dev/null 2>&1 || brew tap homebrew/dupes
+brew update
+brew upgrade brew-cask || true
 
-install brew-cask || true
-install emacs || true
-install git || true
-install hg || true
-install gibo || true
-install hub || true
-install tree || true
-install openssl || true
-install readline || true
-install cmake || true
-install zsh || true
-install wget || true
-install curl || true
-install cmake || true
-install libtool || true
-install automake || true
-install pstree || true
-install nkf || true
-install tig || true
-install ack || true
-install ngrep || true
-install jpeg || true
-install libpng || true
-install freetype || true
-install imagemagick || true
-install zsh || true
-install optipng || true
+brew cask > /dev/null 2>&1 || brew install brew-cask
+which emacs > /dev/null 2>&1 || brew install brew-cask
+which git > /dev/null 2>&1 || brew install brew-cask
+which hub > /dev/null 2>&1 || brew install brew-cask
+which tree > /dev/null 2>&1 || brew install brew-cask
 
-install python || true
-install python3 || true
-install ruby-build || true
-install rbenv || true
-install perl-build || true
-install plenv || true
-install nvm || true
-install nginx ||  true
-install phantomjs || true
-install casperjs --devel || true
-install jq || true
-install mysql || true
-install memcached || true
-install redis || true
-install "http://toolbelt.treasuredata.com/brew/td-agent.rb" || true
-install heroku || true
-install postgres || true
-install mecab || true
-install mecab-ipadic || true
+brew install openssl || true
+brew install readline || true
+brew install cmake || true
+brew install zsh || true
+brew install wget || true
+brew install curl || true
+brew install cmake || true
+brew install libtool || true
+brew install automake || true
+brew install pstree || true
+brew install nkf || true
+brew install tig || true
+brew install ack || true
+brew install ngrep || true
+brew install jpeg || true
+brew install libpng || true
+brew install freetype || true
+brew install imagemagick || true
+brew install optipng || true
 
-cask install dropbox || true
-cask install hipchat || true
-cask install skype || true
-cask install google-chrome || true
-cask install firefox || true
-cask install virtualbox || true
-cask install vagrant || true
-cask install vlc || true
-cask install iterm2 || true
-cask install hyperswitch || true
-cask install skitch || true
-cask install sublime-text || true
-cask install gyazo || true
-cask install google-japanese-ime || true
-cask install sequel-pro || true
-cask install pg-commander || true
-cask install cyberduck || true
-cask install boot2docker || true
+brew install python || true
+brew install python3 || true
+brew install ruby-build || true
+brew install rbenv || true
+brew install perl-build || true
+brew install plenv || true
+brew install nvm || true
+brew install nginx ||  true
+brew install phantomjs || true
+brew install casperjs --devel || true
+brew install jq || true
+brew install mysql || true
+brew install memcached || true
+brew install redis || true
+brew install "http://toolbelt.treasuredata.com/brew/td-agent.rb" || true
+brew install heroku || true
+brew install postgres || true
+brew install mecab || true
+brew install mecab-ipadic || true
 
-tap homebrew/dupes
-install --HEAD -f --cc=llvm-gcc screen
+brew cask install dropbox || true
+brew cask install hipchat || true
+brew cask install skype || true
+brew cask install google-chrome || true
+brew cask install firefox || true
+brew cask install virtualbox || true
+brew cask install vagrant || true
+brew cask install vlc || true
+brew cask install iterm2 || true
+brew cask install hyperswitch || true
+brew cask install skitch || true
+brew cask install sublime-text || true
+brew cask install gyazo || true
+brew cask install google-japanese-ime || true
+brew cask install sequel-pro || true
+brew cask install pg-commander || true
+brew cask install cyberduck || true
+brew cask install boot2docker || true
 
-cleanup
+brew install --HEAD -f --cc=llvm-gcc screen || true
+
+# google cloud sdk
+
+gcloud version 2> /dev/null || curl https://sdk.cloud.google.com | bash
+
+brew cleanup
