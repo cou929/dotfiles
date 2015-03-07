@@ -1,5 +1,6 @@
 brew tap | grep versions > /dev/null 2>&1 || brew tap homebrew/versions
 brew tap | grep dupes > /dev/null 2>&1 || brew tap homebrew/dupes
+brew tap | grep binary > /dev/null 2>&1 || brew tap homebrew/binary
 brew update
 brew upgrade brew-cask || true
 
@@ -48,6 +49,8 @@ brew install heroku || true
 brew install postgres || true
 brew install mecab || true
 brew install mecab-ipadic || true
+brew install jad || true
+brew install dex2jar || true
 
 brew cask install dropbox || true
 brew cask install hipchat || true

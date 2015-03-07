@@ -17,3 +17,5 @@
         br = branch
 [push]
 	default = tracking
+[core]
+	autocrlf = input
