@@ -6,7 +6,6 @@
       (append
        (list
         (expand-file-name "~/.emacs.d/elisp")
-        (expand-file-name "~/.emacs.d")
         )
        load-path))
 
@@ -289,11 +288,6 @@
 (global-set-key [f10] 'flymake-goto-prev-error)
 (global-set-key [f11] 'flymake-goto-next-error)
 
-;;; gjslint
-(require 'gjslint)
-(add-hook 'js2-mode-hook
-          (lambda () (flymake-mode t)))
-
 ;;; php-mode
 (require 'php-mode)
 
@@ -417,3 +411,28 @@
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
+
+;;; gtags
+(setq gtags-prefix-key "\C-c")
+(require 'gtags)
+(require 'anything-gtags)
+(setq gtags-mode-hook
+      '(lambda ()
+         (define-key gtags-mode-map "\C-cs" 'gtags-find-symbol)
+         (define-key gtags-mode-map "\C-cr" 'gtags-find-rtag)
+         (define-key gtags-mode-map "\C-ct" 'gtags-find-tag)
+         (define-key gtags-mode-map "\C-cf" 'gtags-parse-file)
+         (define-key gtags-mode-map "\C-cb" 'gtags-pop-stack)))
+(add-hook 'c-mode-common-hook
+          '(lambda()
+             (gtags-mode 1)))
+(add-hook 'js2-mode-hook
+          '(lambda()
+             (gtags-mode 1)))
+(add-hook 'cperl-mode-hook
+          '(lambda()
+             (gtags-mode 1)))
+(add-hook 'ruby-mode-hook
+          '(lambda()
+             (gtags-mode 1)))
+
