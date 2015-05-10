@@ -51,6 +51,7 @@ brew install mecab || true
 brew install mecab-ipadic || true
 brew install jad || true
 brew install dex2jar || true
+brew install global --with-exuberant-ctags --with-pygments || true
 
 brew cask install dropbox || true
 brew cask install hipchat || true
