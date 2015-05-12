@@ -30,6 +30,7 @@ brew install freetype || true
 brew install imagemagick || true
 brew install optipng || true
 
+brew instsall go || true
 brew install python || true
 brew install python3 || true
 brew install ruby-build || true
