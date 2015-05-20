@@ -95,36 +95,6 @@
 ;;              ))
 
 
-;;; anything with git project
-;;; http://qiita.com/hadashiA/items/b6f40f344ee7e3573993
-(dolist (elt '(("modified" "Modified files (%s)" "--modified")
-               ("untracked" "Untracked files (%s)" "--others --exclude-standard")
-               ("all" "All controlled files in this project (%s)" "")))
-  (destructuring-bind (suffix name options) elt
-    (eval `(defvar ,(intern (concat "anything-c-source-git-project-for-" suffix))
-             `((name . ,(format name default-directory))
-               (init . (lambda ()
-                         (unless (and ,(string= options "") ;update candidate buffer every time except for that of all project files
-                                      (anything-candidate-buffer))
-                           (with-current-buffer
-                               (anything-candidate-buffer 'global)
-                             (insert
-                              (shell-command-to-string
-                               ,(format "git ls-files $(git rev-parse --show-cdup) %s"
-                                        options)))))))
-               (candidates-in-buffer)
-               (type . file))
-             ))))
-
-(defun anything-git-project ()
-  (interactive)
-  (let ((sources '(anything-c-source-git-project-for-modified
-                   anything-c-source-git-project-for-untracked
-                   anything-c-source-git-project-for-all)))
-    (anything-other-buffer sources
-     (format "*Anything git project in %s*" default-directory))))
-
-
 ;;; anything.el
 ;; bind anything to C-x b
 (require 'info)
@@ -469,3 +439,33 @@
           '(lambda()
              (gtags-mode 1)))
 
+
+;;; anything with git project
+;;; http://qiita.com/hadashiA/items/b6f40f344ee7e3573993
+;;; http://blog.shibayu36.org/entry/2012/12/22/135157
+(dolist (elt '(("modified" "Modified files (%s)" "--modified")
+               ("untracked" "Untracked files (%s)" "--others --exclude-standard")
+               ("all" "All controlled files in this project (%s)" "")))
+  (destructuring-bind (suffix name options) elt
+    (eval `(defvar ,(intern (concat "anything-c-source-git-project-for-" suffix))
+             `((name . ,(format name default-directory))
+               (init . (lambda ()
+                         (unless (and ,(string= options "") ;update candidate buffer every time except for that of all project files
+                                      (anything-candidate-buffer))
+                           (with-current-buffer
+                               (anything-candidate-buffer 'global)
+                             (insert
+                              (shell-command-to-string
+                               ,(format "git ls-files $(git rev-parse --show-cdup) %s"
+                                        options)))))))
+               (candidates-in-buffer)
+               (type . file))
+             ))))
+
+(defun anything-git-project ()
+  (interactive)
+  (let ((sources '(anything-c-source-git-project-for-modified
+                   anything-c-source-git-project-for-untracked
+                   anything-c-source-git-project-for-all)))
+    (anything-other-buffer sources
+     (format "*Anything git project in %s*" default-directory))))
