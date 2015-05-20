@@ -129,3 +129,9 @@ source "$HOME/google-cloud-sdk/completion.zsh.inc"
 export DOCKER_TLS_VERIFY=1
 export DOCKER_HOST=tcp://192.168.59.103:2376
 export DOCKER_CERT_PATH=$HOME/.boot2docker/certs/boot2docker-vm
+
+# jdk for android studio
+export STUDIO_JDK=/Library/Java/JavaVirtualMachines/jdk1.7.0_71.jdk
+
+# [test] check google js style guide update
+curl -s http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml -o /var/tmp/gjssg.1 && diff -u /var/tmp/gjssg /var/tmp/gjssg.1 > /var/tmp/diff || cat /var/tmp/diff | echo "[DIFF] Google JavaScript Style Guide" ; mv /var/tmp/gjssg.1 /var/tmp/gjssg

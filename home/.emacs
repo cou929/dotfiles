@@ -6,7 +6,6 @@
       (append
        (list
         (expand-file-name "~/.emacs.d/elisp")
-        (expand-file-name "~/.emacs.d")
         )
        load-path))
 
@@ -64,20 +63,20 @@
                     ))
 
 ;;; flymake
-(require 'flymake)
-(defun flymake-cc-init ()
-  (let* ((temp-file   (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-         (local-file  (file-relative-name
-                       temp-file
-                       (file-name-directory buffer-file-name))))
-    (list "g++" (list "-Wall" "-Wextra" local-file))))
+;; (require 'flymake)
+;; (defun flymake-cc-init ()
+;;   (let* ((temp-file   (flymake-init-create-temp-buffer-copy
+;;                        'flymake-create-temp-inplace))
+;;          (local-file  (file-relative-name
+;;                        temp-file
+;;                        (file-name-directory buffer-file-name))))
+;;     (list "g++" (list "-Wall" "-Wextra" local-file))))
 
-(push '("\\.cpp$" flymake-cc-init) flymake-allowed-file-name-masks)
+;; (push '("\\.cpp$" flymake-cc-init) flymake-allowed-file-name-masks)
 
-(add-hook 'c++-mode-hook
-          '(lambda ()
-             (flymake-mode t)))
+;; (add-hook 'c++-mode-hook
+;;           '(lambda ()
+;;              (flymake-mode t)))
 
 ;;; install-elisp
 ;; http://www.emacswiki.org/cgi-bin/wiki/download/install-elisp.el
@@ -89,11 +88,11 @@
 (run-with-idle-timer 0.5 t 'auto-save-buffers)
 
 ;;; in c mode, use flyspell only for comemnt and string
-(add-hook 'c-mode-common-hook
-          '(lambda ()
-             ;; enable flyspell-prog-mode
-             (flyspell-prog-mode)
-             ))
+;; (add-hook 'c-mode-common-hook
+;;           '(lambda ()
+;;              ;; enable flyspell-prog-mode
+;;              (flyspell-prog-mode)
+;;              ))
 
 
 ;;; anything with git project
@@ -307,63 +306,58 @@
                                (define-key python-mode-map "\C-m" 'newline-and-indent)))
 
 ;;; flymake for python
-(add-hook 'find-file-hook 'flymake-find-file-hook)
-(when (load "flymake" t)
-  (defun flymake-pyflakes-init ()
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-           (local-file (file-relative-name
-                        temp-file
-                        (file-name-directory buffer-file-name))))
-      (list "/Users/kosei/projects/utils/pycheckers"  (list local-file))))
-  (add-to-list 'flymake-allowed-file-name-masks
-               '("\\.py\\'" flymake-pyflakes-init)))
-(load-library "flymake-cursor")
-(global-set-key [f10] 'flymake-goto-prev-error)
-(global-set-key [f11] 'flymake-goto-next-error)
-
-;;; gjslint
-(require 'gjslint)
-(add-hook 'js2-mode-hook
-          (lambda () (flymake-mode t)))
+;; (add-hook 'find-file-hook 'flymake-find-file-hook)
+;; (when (load "flymake" t)
+;;   (defun flymake-pyflakes-init ()
+;;     (let* ((temp-file (flymake-init-create-temp-buffer-copy
+;;                        'flymake-create-temp-inplace))
+;;            (local-file (file-relative-name
+;;                         temp-file
+;;                         (file-name-directory buffer-file-name))))
+;;       (list "/Users/kosei/projects/utils/pycheckers"  (list local-file))))
+;;   (add-to-list 'flymake-allowed-file-name-masks
+;;                '("\\.py\\'" flymake-pyflakes-init)))
+;; (load-library "flymake-cursor")
+;; (global-set-key [f10] 'flymake-goto-prev-error)
+;; (global-set-key [f11] 'flymake-goto-next-error)
 
 ;;; php-mode
 (require 'php-mode)
 
 ;;; flymake for perl
-(defvar flymake-perl-err-line-patterns '(("\\(.*\\) at \\([^ \n]+\\) line \\([0-9]+\\)[,.\n]" 2 3 nil 1)))
-(defconst flymake-allowed-perl-file-name-masks '(("\\.pl$" flymake-perl-init)
-                                                 ("\\.pm$" flymake-perl-init)
-                                                 ("\\.t$" flymake-perl-init)
-                                                 ))
+;; (defvar flymake-perl-err-line-patterns '(("\\(.*\\) at \\([^ \n]+\\) line \\([0-9]+\\)[,.\n]" 2 3 nil 1)))
+;; (defconst flymake-allowed-perl-file-name-masks '(("\\.pl$" flymake-perl-init)
+;;                                                  ("\\.pm$" flymake-perl-init)
+;;                                                  ("\\.t$" flymake-perl-init)
+;;                                                  ))
 
-(defun flymake-perl-init ()
-  (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                     'flymake-create-temp-inplace))
-         (local-file (file-relative-name
-                      temp-file
-                      (file-name-directory buffer-file-name))))
-    (list "perl" (list "-wc" local-file))))
+;; (defun flymake-perl-init ()
+;;   (let* ((temp-file (flymake-init-create-temp-buffer-copy
+;;                      'flymake-create-temp-inplace))
+;;          (local-file (file-relative-name
+;;                       temp-file
+;;                       (file-name-directory buffer-file-name))))
+;;     (list "perl" (list "-wc" local-file))))
 
-(defun flymake-perl-load ()
-  (interactive)
-  (set-perl5lib)
-  (defadvice flymake-post-syntax-check (before flymake-force-check-was-interrupted)
-    (setq flymake-check-was-interrupted t))
-  (ad-activate 'flymake-post-syntax-check)
-  (setq flymake-allowed-file-name-masks (append flymake-allowed-file-name-masks flymake-allowed-perl-file-name-masks))
-  (setq flymake-err-line-patterns flymake-perl-err-line-patterns)
-  (flymake-mode t))
+;; (defun flymake-perl-load ()
+;;   (interactive)
+;;   (set-perl5lib)
+;;   (defadvice flymake-post-syntax-check (before flymake-force-check-was-interrupted)
+;;     (setq flymake-check-was-interrupted t))
+;;   (ad-activate 'flymake-post-syntax-check)
+;;   (setq flymake-allowed-file-name-masks (append flymake-allowed-file-name-masks flymake-allowed-perl-file-name-masks))
+;;   (setq flymake-err-line-patterns flymake-perl-err-line-patterns)
+;;   (flymake-mode t))
 
-(add-hook 'cperl-mode-hook '(lambda () (flymake-perl-load)))
+;; (add-hook 'cperl-mode-hook '(lambda () (flymake-perl-load)))
 
-(defun next-flymake-error ()
-  (interactive)
-  (flymake-goto-next-error)
-  (let ((err (get-char-property (point) 'help-echo)))
-    (when err
-      (message err))))
-(global-set-key "\C-ce" 'next-flymake-error)
+;; (defun next-flymake-error ()
+;;   (interactive)
+;;   (flymake-goto-next-error)
+;;   (let ((err (get-char-property (point) 'help-echo)))
+;;     (when err
+;;       (message err))))
+;; (global-set-key "\C-ce" 'next-flymake-error)
 
 ;;; perltidy
 (defun perltidy-region ()
@@ -450,3 +444,28 @@
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
+
+;;; gtags
+(setq gtags-prefix-key "\C-c")
+(require 'gtags)
+(require 'anything-gtags)
+(setq gtags-mode-hook
+      '(lambda ()
+         (define-key gtags-mode-map "\C-cs" 'gtags-find-symbol)
+         (define-key gtags-mode-map "\C-cr" 'gtags-find-rtag)
+         (define-key gtags-mode-map "\C-ct" 'gtags-find-tag)
+         (define-key gtags-mode-map "\C-cf" 'gtags-parse-file)
+         (define-key gtags-mode-map "\C-cb" 'gtags-pop-stack)))
+(add-hook 'c-mode-common-hook
+          '(lambda()
+             (gtags-mode 1)))
+(add-hook 'js2-mode-hook
+          '(lambda()
+             (gtags-mode 1)))
+(add-hook 'cperl-mode-hook
+          '(lambda()
+             (gtags-mode 1)))
+(add-hook 'ruby-mode-hook
+          '(lambda()
+             (gtags-mode 1)))
+
