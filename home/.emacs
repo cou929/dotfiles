@@ -103,8 +103,8 @@
 (require 'anything-config)
 (setq anything-sources
       '(anything-c-source-buffers+
-        anything-c-source-git-project-for-modified
-        anything-c-source-git-project-for-all
+        ;; anything-c-source-git-project-for-modified
+        ;; anything-c-source-git-project-for-all
         anything-c-source-recentf
         anything-c-source-man-pages
         anything-c-source-emacs-commands
@@ -441,31 +441,32 @@
 
 
 ;;; anything with git project
-;;; http://qiita.com/hadashiA/items/b6f40f344ee7e3573993
-;;; http://blog.shibayu36.org/entry/2012/12/22/135157
-(dolist (elt '(("modified" "Modified files (%s)" "--modified")
-               ("untracked" "Untracked files (%s)" "--others --exclude-standard")
-               ("all" "All controlled files in this project (%s)" "")))
-  (destructuring-bind (suffix name options) elt
-    (eval `(defvar ,(intern (concat "anything-c-source-git-project-for-" suffix))
-             `((name . ,(format name default-directory))
-               (init . (lambda ()
-                         (unless (and ,(string= options "") ;update candidate buffer every time except for that of all project files
-                                      (anything-candidate-buffer))
-                           (with-current-buffer
-                               (anything-candidate-buffer 'global)
-                             (insert
-                              (shell-command-to-string
-                               ,(format "git ls-files $(git rev-parse --show-cdup) %s"
-                                        options)))))))
-               (candidates-in-buffer)
-               (type . file))
-             ))))
+;;; http://yaotti.hatenablog.com/entry/20101216/1292500323
+;;; TODO: use this as anything-source
+
+(defun anything-c-sources-git-project-for (pwd)
+  (loop for elt in
+        '(("Modified files (%s)" . "--modified")
+          ("Untracked files (%s)" . "--others --exclude-standard")
+          ("All controlled files in this project (%s)" . ""))
+        collect
+        `((name . ,(format (car elt) pwd))
+          (init . (lambda ()
+                    (unless (and ,(string= (cdr elt) "")
+                                 (anything-candidate-buffer))
+                      (with-current-buffer
+                          (anything-candidate-buffer 'global)
+                        (insert
+                         (shell-command-to-string
+                          ,(format "git ls-files $(git rev-parse --show-cdup) %s"
+                                   (cdr elt))))))))
+          (candidates-in-buffer)
+          (type . file))))
 
 (defun anything-git-project ()
   (interactive)
-  (let ((sources '(anything-c-source-git-project-for-modified
-                   anything-c-source-git-project-for-untracked
-                   anything-c-source-git-project-for-all)))
+  (let* ((pwd default-directory)
+         (sources (anything-c-sources-git-project-for pwd)))
     (anything-other-buffer sources
-     (format "*Anything git project in %s*" default-directory))))
+     (format "*Anything git project in %s*" pwd))))
+(define-key global-map (kbd "C-x n") 'anything-git-project)
