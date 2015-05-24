@@ -6,6 +6,7 @@
       (append
        (list
         (expand-file-name "~/.emacs.d/elisp")
+        (expand-file-name "~/.emacs.d/elisp/coffee-mode")
         )
        load-path))
 
@@ -470,3 +471,6 @@
     (anything-other-buffer sources
      (format "*Anything git project in %s*" pwd))))
 (define-key global-map (kbd "C-x n") 'anything-git-project)
+
+;;; coffee mode
+(require 'coffee-mode)
