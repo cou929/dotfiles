@@ -135,3 +135,9 @@ export STUDIO_JDK=/Library/Java/JavaVirtualMachines/jdk1.7.0_71.jdk
 
 # [test] check google js style guide update
 curl -s http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml -o /var/tmp/gjssg.1 && diff -u /var/tmp/gjssg /var/tmp/gjssg.1 > /var/tmp/diff || cat /var/tmp/diff | echo "[DIFF] Google JavaScript Style Guide" ; mv /var/tmp/gjssg.1 /var/tmp/gjssg
+export PATH="$HOME/.embulk/bin:$PATH"
+
+# golang
+export GOPATH=$HOME/go1.4
+export GOROOT=/usr/local/bin/go
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
