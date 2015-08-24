@@ -139,5 +139,4 @@ export PATH="$HOME/.embulk/bin:$PATH"
 
 # golang
 export GOPATH=$HOME/go1.4
-export GOROOT=/usr/local/bin/go
-export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+export PATH=$GOPATH/bin:$PATH
